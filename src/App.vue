@@ -1,7 +1,8 @@
 <script setup lang="ts">
-// Step 1: Choose booking accomodations and dates
+// Step 1: Choose booking accomodations, dates, and # of travelers
 // Step 2: Fill out personal info
-// Step 3: Checkout
+// Step 3: Checkout w/ billing details and payment
+// Step 4: Add-ons?
 
 import { RouterLink, RouterView } from 'vue-router'
 </script>
