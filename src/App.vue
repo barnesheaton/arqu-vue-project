@@ -1,17 +1,21 @@
 <script setup lang="ts">
+// Step 1: Choose booking accomodations and dates
+// Step 2: Fill out personal info
+// Step 3: Checkout
+
 import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
   <header class="w-full">
-    <div>
-      <nav>
+    <div class="max-w-[1280px] px-8">
+      <nav class="flex">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
       </nav>
     </div>
   </header>
-  <div class="mx-auto max-w-[1280px] flex justify-center items-center">
+  <div class="mx-auto max-w-[1280px] px-8">
     <RouterView />
   </div>
 </template>
