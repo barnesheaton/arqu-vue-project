@@ -1,23 +1,39 @@
 <script setup lang="ts">
-// Step 1: Choose booking accomodations, dates, and # of travelers
-// Step 2: Fill out personal info
-// Step 3: Checkout w/ billing details and payment
-// Step 4: Add-ons?
+import { useRoute, RouterView } from 'vue-router'
+import { computed } from 'vue'
 
-import { RouterLink, RouterView } from 'vue-router'
-
-import { ChevronLeft } from 'lucide-vue-next'
-import { Button } from '@/components/ui/button'
+import { Progress } from '@/components/ui/progress'
 import Toaster from '@/components/ui/toast/Toaster.vue'
+
+const route = useRoute()
+
+const currentProgress = computed(() => {
+  let progress
+  switch (route.name) {
+    case 'step-one':
+      progress = 25
+      break
+    case 'step-two':
+      progress = 50
+      break
+    case 'step-three':
+      progress = 75
+      break
+    default:
+      progress = 25
+      break
+  }
+  return progress
+})
 </script>
 
 <template>
-  <header class="w-full">
-    <!-- <div class="max-w-[1280px] px-8">
-      <nav class="flex">
-        <Button variant="outline"> <ChevronLeft class="w-4 h-4 mr-2" /> Go Back </Button>
-      </nav>
-    </div> -->
+  <header class="w-full fixed bg-white shadow-sm h-10">
+    <div class="max-w-[1280px] px-8 flex items-center justify-center h-10">
+      <!-- <nav class="flex items-center justify-center h-10"> -->
+      <Progress :model-value="currentProgress" />
+      <!-- </nav> -->
+    </div>
   </header>
   <div class="mx-auto max-w-[1280px] px-8 py-16">
     <RouterView />

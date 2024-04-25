@@ -6,8 +6,8 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 
+import { ChevronLeft } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
 import FormInput from '@/components/ui/form-input.vue'
 
@@ -22,10 +22,10 @@ const formData = ref({
 
 const formSchema = toTypedSchema(
   z.object({
-    name: z.string().min(1, 'Your name is required'),
-    email: z.string().min(1, 'An email number is required'),
-    phone: z.string().min(1, 'A Phone number is required'),
-    requests: z.string().optional()
+    address: z.string().min(1, 'Your address is required'),
+    city: z.string().min(1, 'Your city is required'),
+    state: z.string().min(1, 'Your state is required'),
+    zip: z.string().min(1, 'Your zip code is required')
   })
 )
 
@@ -35,65 +35,68 @@ const { handleSubmit, setValues, values } = useForm({
 
 const onSubmit = handleSubmit((values) => {
   console.log('Form submitted!', values, formData.value)
-  formStore.stepTwo = {
+  formStore.stepThree = {
     ...values
   }
   toast({
-    title: `We got it ${values.name}!`,
+    title: `Hold tight!`,
     description: 'You can go back and edit your personal information at any point.'
   })
   router.push({ name: 'step-three' })
 })
 
 onMounted(() => {
-  if (formStore.stepTwo && formStore.stepTwo) {
-    setValues(formStore.stepTwo)
+  if (formStore.stepThree && formStore.stepThree) {
+    setValues(formStore.stepThree)
   }
 })
 </script>
 
 <template>
   <main class="flex flex-col w-full">
-    <h1 class="text-[60px] text-cyan-800">Step 2</h1>
-    <h4>Fill out your contact details</h4>
-    <form class="space-y-6 w-full" @submit="onSubmit">
+    <div class="w-full">
+      <Button
+        @click="$router.push({ name: 'step-two' })"
+        variant="outline"
+        class="justify-self-start"
+      >
+        <ChevronLeft class="w-4 h-4 mr-2" /> Go Back
+      </Button>
+    </div>
+    <form class="space-y-4 w-full flex flex-col items-center" @submit.prevent>
+      <h1 class="text-[60px] text-cyan-800">Step 3</h1>
+      <h4>What's your billing address?</h4>
       <div class="w-1/2">
         <FormInput
-          :default-value="values.name"
-          name="name"
+          :default-value="values.address"
+          name="address"
           type="text"
-          label="Full Name"
-          placeholder="First and Last Name"
+          label="Billing Address"
+          placeholder="Billing Address"
         />
         <FormInput
-          :default-value="values.email"
-          name="email"
+          :default-value="values.city"
+          name="city"
           type="text"
-          label="E-mail Address"
-          placeholder="E-mail Address"
+          label="City"
+          placeholder="New York City"
         />
         <FormInput
-          :default-value="values.phone"
-          name="phone"
+          :default-value="values.state"
+          name="state"
           type="text"
-          label="Phone Number"
-          placeholder="(123)-456-7890"
+          label="State"
+          placeholder="State"
         />
-        <FormInput name="requests" label="Additional Info">
-          <Textarea
-            :default-value="values.requests"
-            placeholder="Any special accomodations we need to be made aware of?"
-            class="resize-none"
-            @update:model-value="
-              (v) => {
-                setValues({ requests: v })
-              }
-            "
-          />
-        </FormInput>
+        <FormInput
+          :default-value="values.zip"
+          name="zip"
+          type="text"
+          label="Zip Code"
+          placeholder="90210"
+        />
       </div>
-      <Button @click="$router.push('/')" class="mr-4"> Go Back </Button>
-      <Button type="submit"> Next </Button>
+      <Button @click="onSubmit" type="submit"> Next Step</Button>
     </form>
   </main>
 </template>

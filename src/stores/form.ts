@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import type { Ref } from 'vue'
 
 export const useFormStore = defineStore('form', {
   state: () => {
@@ -20,10 +19,12 @@ interface StepTwo {
   name: any
   email: any
   phone: any
-  requests?: any | undefined
+  requests?: any
 }
 
 interface StepThree {
-  dates: any
-  occupants: any
+  address: any
+  city: any
+  state: any
+  zip: any
 }

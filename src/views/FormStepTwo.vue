@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, toRaw, onMounted } from 'vue'
+import { onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useFormStore } from '@/stores/form'
 import { useForm } from 'vee-validate'
@@ -7,7 +7,6 @@ import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 
 import { ChevronLeft } from 'lucide-vue-next'
-
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
@@ -15,12 +14,6 @@ import FormInput from '@/components/ui/form-input.vue'
 
 const formStore = useFormStore()
 const router = useRouter()
-
-const formData = ref({
-  name: '',
-  email: '',
-  dates: null
-})
 
 const formSchema = toTypedSchema(
   z.object({
@@ -36,7 +29,7 @@ const { handleSubmit, setValues, values } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  console.log('Form submitted!', values, formData.value)
+  console.log('Form submitted!', values)
   formStore.stepTwo = {
     ...values
   }
@@ -61,7 +54,7 @@ onMounted(() => {
         <ChevronLeft class="w-4 h-4 mr-2" /> Go Back
       </Button>
     </div>
-    <form class="space-y-4 w-full flex flex-col items-center" @submit="onSubmit">
+    <form class="space-y-4 w-full flex flex-col items-center">
       <h1 class="text-[60px] text-cyan-800">Step 2</h1>
       <h4>Fill out your contact details</h4>
       <div class="w-1/2">
@@ -99,7 +92,7 @@ onMounted(() => {
           />
         </FormInput>
       </div>
-      <Button type="submit"> Next Step</Button>
+      <Button @click="onSubmit" type="submit"> Next Step</Button>
     </form>
   </main>
 </template>
