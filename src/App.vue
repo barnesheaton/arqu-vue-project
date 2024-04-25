@@ -12,7 +12,7 @@ import { RouterLink, RouterView } from 'vue-router'
     <div class="max-w-[1280px] px-8">
       <nav class="flex">
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
+        <RouterLink to="/step-two">Step Two</RouterLink>
       </nav>
     </div>
   </header>
