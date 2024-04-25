@@ -4,17 +4,11 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 
+import { useFormStore } from '@/stores/form'
+const formStore = useFormStore()
+
 import { Button } from '@/components/ui/button'
-import { toast } from '@/components/ui/toast/use-toast'
-import { Input } from '@/components/ui/input'
-import {
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage
-} from '@/components/ui/form'
+import { FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
 import DateRangePicker from '@/components/ui/date-range-picker.vue'
 import OccupancyPicker from '@/components/ui/occupancy-picker.vue'
 
@@ -48,6 +42,9 @@ const { handleSubmit, setValues, values, errors } = useForm({
 
 const onSubmit = handleSubmit((values) => {
   console.log('Form submitted!', values, formData.value)
+  formStore.$patch({
+    stepOne: values
+  })
 })
 </script>
 
