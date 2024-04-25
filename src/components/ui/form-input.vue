@@ -9,11 +9,12 @@ import {
   FormMessage
 } from '@/components/ui/form'
 
-const props = defineProps({
+defineProps({
   type: String,
   placeholder: String,
   label: String,
   description: String
+  //   defaultValue: String
 })
 </script>
 

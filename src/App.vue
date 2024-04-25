@@ -6,19 +6,20 @@
 
 import { RouterLink, RouterView } from 'vue-router'
 
+import { ChevronLeft } from 'lucide-vue-next'
+import { Button } from '@/components/ui/button'
 import Toaster from '@/components/ui/toast/Toaster.vue'
 </script>
 
 <template>
   <header class="w-full">
-    <div class="max-w-[1280px] px-8">
+    <!-- <div class="max-w-[1280px] px-8">
       <nav class="flex">
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/step-two">Step Two</RouterLink>
+        <Button variant="outline"> <ChevronLeft class="w-4 h-4 mr-2" /> Go Back </Button>
       </nav>
-    </div>
+    </div> -->
   </header>
-  <div class="mx-auto max-w-[1280px] px-8">
+  <div class="mx-auto max-w-[1280px] px-8 py-16">
     <RouterView />
   </div>
   <Toaster />

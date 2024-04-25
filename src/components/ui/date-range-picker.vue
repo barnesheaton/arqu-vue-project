@@ -36,13 +36,13 @@ watch(
 <template>
   <Popover>
     <PopoverTrigger as-child>
-      <div class="space-x-6 flex">
+      <div class="flex flex-col space-y-2">
         <div>
           <h4>Check In</h4>
           <Button
             variant="outline"
             :class="
-              cn('w-[280px] justify-start text-left font-normal', !value && 'text-muted-foreground')
+              cn('w-full justify-start text-left font-normal', !value && 'text-muted-foreground')
             "
           >
             <CalendarIcon class="mr-2 h-4 w-4" />
@@ -57,7 +57,7 @@ watch(
           <Button
             variant="outline"
             :class="
-              cn('w-[280px] justify-start text-left font-normal', !value && 'text-muted-foreground')
+              cn('w-full justify-start text-left font-normal', !value && 'text-muted-foreground')
             "
           >
             <CalendarIcon class="mr-2 h-4 w-4" />

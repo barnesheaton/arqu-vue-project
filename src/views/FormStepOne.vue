@@ -35,7 +35,7 @@ const formSchema = toTypedSchema(
   })
 )
 
-const { handleSubmit, setValues, values, errors } = useForm({
+const { handleSubmit, setValues } = useForm({
   initialValues: {
     startDate: '2024-04-20',
     endDate: '2024-04-24',
@@ -48,9 +48,10 @@ const { handleSubmit, setValues, values, errors } = useForm({
 
 const onSubmit = handleSubmit((values) => {
   formStore.stepOne = { dates: formData.value.dates, occupants: formData.value.occupants }
+  // const duration =
   toast({
-    title: 'We got it!',
-    description: 'You can go back and edit your trip details at any point.'
+    title: `We got your ${4} day trip`,
+    description: `You can go back and edit your trip details at any point.`
   })
   router.push({ name: 'step-two' })
 })
@@ -58,27 +59,19 @@ const onSubmit = handleSubmit((values) => {
 onMounted(() => {
   if (formStore.stepOne && formStore.stepOne) {
     formData.value = formStore.stepOne
-    console.log('setting Values')
-    // setValues({
-    //   startDate: formStore.stepOne.startDate,
-    //   endDate: formStore.stepOne.endDate,
-    //   adults: formStore.stepOne.adults,
-    //   children: formStore.stepOne.children,
-    //   rooms: formStore.stepOne.rooms
-    // })
   }
 })
 </script>
 
 <template>
-  <main class="flex flex-col w-full">
-    <h1 class="text-[60px] text-cyan-800">Step 1</h1>
-    <h4>Choose your trip dates and details</h4>
-    {{ formData }}
-    <form class="space-y-6 w-full mt-8" @submit.prevent>
-      <div class="grid grid-cols-2 w-full">
+  <main class="flex flex-col w-full items-center">
+    <div class="h-[40px]"></div>
+    <form class="space-y-4 w-full flex flex-col items-center" @submit.prevent>
+      <h1 class="text-[60px] text-cyan-800">Step 1</h1>
+      <h4>Choose your trip dates and details</h4>
+      <div class="w-1/2">
         <FormField name="endDate">
-          <FormItem class="flex flex-col">
+          <FormItem class="flex flex-col w-ful">
             <DateRangePicker
               v-model="formData.dates"
               @update:start-date="

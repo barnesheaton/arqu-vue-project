@@ -43,7 +43,7 @@ const totalOccupants = computed(() => value.value?.adults?.[0] + value.value?.ch
         <Button
           variant="outline"
           :class="
-            cn('w-[280px] justify-start text-left font-normal', !value && 'text-muted-foreground')
+            cn('w-full justify-start text-left font-normal', !value && 'text-muted-foreground')
           "
         >
           {{ totalOccupants || '' }} Travelers, {{ value?.rooms?.[0] || '' }} Room(s)

@@ -6,8 +6,6 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 
-import { ChevronLeft } from 'lucide-vue-next'
-
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
@@ -56,14 +54,9 @@ onMounted(() => {
 
 <template>
   <main class="flex flex-col w-full">
-    <div class="w-full">
-      <Button @click="$router.push('/')" variant="outline" class="justify-self-start">
-        <ChevronLeft class="w-4 h-4 mr-2" /> Go Back
-      </Button>
-    </div>
-    <form class="space-y-4 w-full flex flex-col items-center" @submit="onSubmit">
-      <h1 class="text-[60px] text-cyan-800">Step 2</h1>
-      <h4>Fill out your contact details</h4>
+    <h1 class="text-[60px] text-cyan-800">Step 2</h1>
+    <h4>Fill out your contact details</h4>
+    <form class="space-y-6 w-full" @submit="onSubmit">
       <div class="w-1/2">
         <FormInput
           :default-value="values.name"
@@ -99,7 +92,8 @@ onMounted(() => {
           />
         </FormInput>
       </div>
-      <Button type="submit"> Next Step</Button>
+      <Button @click="$router.push('/')" class="mr-4"> Go Back </Button>
+      <Button type="submit"> Next </Button>
     </form>
   </main>
 </template>
