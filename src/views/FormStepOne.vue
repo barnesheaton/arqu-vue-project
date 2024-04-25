@@ -1,20 +1,26 @@
 <script setup lang="ts">
-import { type Ref, ref, toRaw } from 'vue'
+import { ref, toRaw, onMounted, UnwrapRef } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useFormStore } from '@/stores/form'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
+import { storeToRefs } from 'pinia'
 
-import { useFormStore } from '@/stores/form'
 const formStore = useFormStore()
+const router = useRouter()
+const { stepOne } = storeToRefs(formStore)
 
 import { Button } from '@/components/ui/button'
 import { FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
+import { toast } from '@/components/ui/toast'
 import DateRangePicker from '@/components/ui/date-range-picker.vue'
 import OccupancyPicker from '@/components/ui/occupancy-picker.vue'
 
+// possible that this is unneccesary
 const formData = ref({
-  dates: null,
-  occupants: null
+  dates: null as any,
+  occupants: null as any
 })
 
 const formSchema = toTypedSchema(
@@ -41,10 +47,26 @@ const { handleSubmit, setValues, values, errors } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  console.log('Form submitted!', values, formData.value)
-  formStore.$patch({
-    stepOne: values
+  formStore.stepOne = { dates: formData.value.dates, occupants: formData.value.occupants }
+  toast({
+    title: 'We got it!',
+    description: 'You can go back and edit your trip details at any point.'
   })
+  router.push({ name: 'step-two' })
+})
+
+onMounted(() => {
+  if (formStore.stepOne && formStore.stepOne) {
+    formData.value = formStore.stepOne
+    console.log('setting Values')
+    // setValues({
+    //   startDate: formStore.stepOne.startDate,
+    //   endDate: formStore.stepOne.endDate,
+    //   adults: formStore.stepOne.adults,
+    //   children: formStore.stepOne.children,
+    //   rooms: formStore.stepOne.rooms
+    // })
+  }
 })
 </script>
 
@@ -52,9 +74,8 @@ const onSubmit = handleSubmit((values) => {
   <main class="flex flex-col w-full">
     <h1 class="text-[60px] text-cyan-800">Step 1</h1>
     <h4>Choose your trip dates and details</h4>
-    {{ values }}
-    {{ errors }}
-    <form class="space-y-6 w-full mt-8" @submit="onSubmit">
+    {{ formData }}
+    <form class="space-y-6 w-full mt-8" @submit.prevent>
       <div class="grid grid-cols-2 w-full">
         <FormField name="endDate">
           <FormItem class="flex flex-col">
@@ -77,7 +98,7 @@ const onSubmit = handleSubmit((values) => {
                   if (rawVal.start && rawVal.end) {
                     setValues({
                       startDate: rawVal.start.toString(),
-                      endDate: rawVal.start.toString()
+                      endDate: rawVal.end.toString()
                     })
                   }
                 }
@@ -110,7 +131,7 @@ const onSubmit = handleSubmit((values) => {
           </FormItem>
         </FormField>
       </div>
-      <Button @click="onSubmit" type="submit">Next</Button>
+      <Button @click="() => onSubmit()">Next</Button>
     </form>
   </main>
 </template>

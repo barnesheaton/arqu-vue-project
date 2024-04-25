@@ -5,6 +5,8 @@
 // Step 4: Add-ons?
 
 import { RouterLink, RouterView } from 'vue-router'
+
+import Toaster from '@/components/ui/toast/Toaster.vue'
 </script>
 
 <template>
@@ -19,6 +21,7 @@ import { RouterLink, RouterView } from 'vue-router'
   <div class="mx-auto max-w-[1280px] px-8">
     <RouterView />
   </div>
+  <Toaster />
 </template>
 
 <style scoped>

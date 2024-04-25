@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { type Ref, ref, watch, defineEmits } from 'vue'
+import { type Ref, ref, watch, defineEmits, defineProps } from 'vue'
 import { CalendarDate, DateFormatter, getLocalTimeZone } from '@internationalized/date'
 
 import { Calendar as CalendarIcon } from 'lucide-vue-next'
@@ -13,6 +13,7 @@ const df = new DateFormatter('en-US', {
   dateStyle: 'medium'
 })
 
+const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue', 'update:startDate'])
 
 const value = ref({
@@ -23,6 +24,13 @@ const value = ref({
 watch(value, (newValue) => {
   emit('update:modelValue', newValue)
 })
+
+watch(
+  () => props.modelValue,
+  (newValue, oldValue) => {
+    value.value = newValue
+  }
+)
 </script>
 
 <template>

@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Label } from '@/components/ui/label'
 import { Slider } from '@/components/ui/slider'
 import { cn } from '@/lib/utils'
-import { ref, watch, defineEmits, computed } from 'vue'
+import { ref, watch, defineEmits, defineProps, computed } from 'vue'
 
 const value = ref({
   adults: [2],
@@ -12,6 +12,7 @@ const value = ref({
   rooms: [1]
 })
 
+const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
 
 watch(
@@ -22,6 +23,13 @@ watch(
   // Since this value ref is an object of arrays,
   // we need the "deep" option to properly watch for changes
   { deep: true }
+)
+
+watch(
+  () => props.modelValue,
+  (newValue, oldValue) => {
+    value.value = newValue
+  }
 )
 
 const totalOccupants = computed(() => value.value?.adults?.[0] + value.value?.children?.[0])
