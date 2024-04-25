@@ -1,15 +1,14 @@
 <script setup lang="ts">
-import { ref, toRaw, onMounted, UnwrapRef } from 'vue'
-import { useRoute, useRouter } from 'vue-router'
+import { ref, toRaw, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { useFormStore } from '@/stores/form'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
-import { storeToRefs } from 'pinia'
+import moment from 'moment'
 
 const formStore = useFormStore()
 const router = useRouter()
-const { stepOne } = storeToRefs(formStore)
 
 import { Button } from '@/components/ui/button'
 import { FormDescription, FormField, FormItem, FormMessage } from '@/components/ui/form'
@@ -17,7 +16,6 @@ import { toast } from '@/components/ui/toast'
 import DateRangePicker from '@/components/ui/date-range-picker.vue'
 import OccupancyPicker from '@/components/ui/occupancy-picker.vue'
 
-// possible that this is unneccesary
 const formData = ref({
   dates: null as any,
   occupants: null as any
@@ -48,11 +46,17 @@ const { handleSubmit, setValues } = useForm({
 
 const onSubmit = handleSubmit((values) => {
   formStore.stepOne = { dates: formData.value.dates, occupants: formData.value.occupants }
-  // const duration =
+  // Get difference in days between selected check-in and check-out dates
+  const start = moment(values.startDate)
+  const end = moment(values.endDate)
+  const duration = moment.duration(end.diff(start))
+  const days = duration.asDays()
+  // dsiplay toast with duration to give user trust in data being stored
   toast({
-    title: `We got your ${4} day trip`,
+    title: `We got your ${days} day trip`,
     description: `You can go back and edit your trip details at any point.`
   })
+  // navigate to step two
   router.push({ name: 'step-two' })
 })
 

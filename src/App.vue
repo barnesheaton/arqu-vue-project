@@ -19,6 +19,9 @@ const currentProgress = computed(() => {
     case 'step-three':
       progress = 75
       break
+    case 'form-success':
+      progress = 100
+      break
     default:
       progress = 25
       break
@@ -29,10 +32,10 @@ const currentProgress = computed(() => {
 
 <template>
   <header class="w-full fixed bg-white shadow-sm h-10">
-    <div class="max-w-[1280px] px-8 flex items-center justify-center h-10">
-      <!-- <nav class="flex items-center justify-center h-10"> -->
-      <Progress :model-value="currentProgress" />
-      <!-- </nav> -->
+    <div class="max-w-[1280px] px-8 h-10 flex flex-1 mx-auto">
+      <div class="flex items-center justify-center h-10 w-full">
+        <Progress :model-value="currentProgress" />
+      </div>
     </div>
   </header>
   <div class="mx-auto max-w-[1280px] px-8 py-16">

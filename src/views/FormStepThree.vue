@@ -1,24 +1,27 @@
 <script setup lang="ts">
-import { ref, toRaw, onMounted } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useFormStore } from '@/stores/form'
 import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
+import { states } from '@/lib/utils'
 
 import { ChevronLeft } from 'lucide-vue-next'
 import { Button } from '@/components/ui/button'
 import { toast } from '@/components/ui/toast'
 import FormInput from '@/components/ui/form-input.vue'
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from '@/components/ui/select'
 
 const formStore = useFormStore()
 const router = useRouter()
-
-const formData = ref({
-  name: '',
-  email: '',
-  dates: null
-})
 
 const formSchema = toTypedSchema(
   z.object({
@@ -34,15 +37,14 @@ const { handleSubmit, setValues, values } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  console.log('Form submitted!', values, formData.value)
   formStore.stepThree = {
     ...values
   }
   toast({
     title: `Hold tight!`,
-    description: 'You can go back and edit your personal information at any point.'
+    description: 'We are processing your request'
   })
-  router.push({ name: 'step-three' })
+  router.push({ name: 'form-success' })
 })
 
 onMounted(() => {
@@ -56,7 +58,7 @@ onMounted(() => {
   <main class="flex flex-col w-full">
     <div class="w-full">
       <Button
-        @click="$router.push({ name: 'step-two' })"
+        @click="$router.push({ name: 'step-three' })"
         variant="outline"
         class="justify-self-start"
       >
@@ -87,7 +89,28 @@ onMounted(() => {
           type="text"
           label="State"
           placeholder="State"
-        />
+        >
+          <Select
+            @update:model-value="
+              (v) => {
+                setValues({
+                  state: v
+                })
+              }
+            "
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Select a verified email to display" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectItem :key="state" v-for="state in states" :value="state">
+                  {{ state }}</SelectItem
+                >
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </FormInput>
         <FormInput
           :default-value="values.zip"
           name="zip"
@@ -96,7 +119,7 @@ onMounted(() => {
           placeholder="90210"
         />
       </div>
-      <Button @click="onSubmit" type="submit"> Next Step</Button>
+      <Button @click="onSubmit" type="submit"> Book Your Trip!</Button>
     </form>
   </main>
 </template>
