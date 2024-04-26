@@ -11,6 +11,8 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { toast } from '@/components/ui/toast'
 import FormInput from '@/components/ui/form-input.vue'
+import { FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form'
+import FormControl from '@/components/ui/form/FormControl.vue'
 
 const formStore = useFormStore()
 const router = useRouter()
@@ -40,7 +42,7 @@ const onSubmit = handleSubmit((values) => {
 })
 
 onMounted(() => {
-  if (formStore.stepTwo && formStore.stepTwo) {
+  if (formStore.stepTwo) {
     setValues(formStore.stepTwo)
   }
 })
@@ -81,16 +83,19 @@ onMounted(() => {
         <FormField name="requests">
           <FormItem>
             <FormLabel>Additional Info</FormLabel>
-            <Textarea
-              :default-value="values.requests"
-              placeholder="Any special accomodations we need to be made aware of?"
-              class="resize-none"
-              @update:model-value="
-                (v) => {
-                  setValues({ requests: v as string | undefined })
-                }
-              "
-            />
+            <FormControl>
+              <Textarea
+                :model-value="values.requests"
+                :default-value="values.requests"
+                placeholder="Any special accomodations we need to be made aware of?"
+                class="resize-none"
+                @update:model-value="
+                  (v) => {
+                    setValues({ requests: v as string | undefined })
+                  }
+                "
+              />
+            </FormControl>
             <FormMessage />
           </FormItem>
         </FormField>
