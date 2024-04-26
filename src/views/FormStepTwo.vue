@@ -20,7 +20,7 @@ const router = useRouter()
 const formSchema = toTypedSchema(
   z.object({
     name: z.string().min(1, 'Your name is required'),
-    email: z.string().min(1, 'An email number is required'),
+    email: z.string().min(1, 'An email is required').email('Please enter a valid email.'),
     phone: z.string().min(1, 'A Phone number is required'),
     requests: z.string().optional()
   })
