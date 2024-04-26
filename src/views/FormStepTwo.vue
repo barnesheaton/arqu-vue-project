@@ -87,7 +87,7 @@ onMounted(() => {
               class="resize-none"
               @update:model-value="
                 (v) => {
-                  setValues({ requests: v })
+                  setValues({ requests: v as string | undefined })
                 }
               "
             />
