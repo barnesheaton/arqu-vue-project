@@ -43,7 +43,7 @@ const contactInfo = computed(() => {
     <div class="space-y-4 w-full flex flex-col items-center">
       <Card :class="cn('w-[380px]', $attrs.class ?? '')">
         <CardHeader>
-          <CardTitle>See you soon {{ contactInfo.name }}! </CardTitle>
+          <CardTitle>See you soon {{ contactInfo?.name }}! </CardTitle>
           <CardDescription>Here are the details of your upcoming trip.</CardDescription>
         </CardHeader>
         <CardContent class="grid gap-4">
