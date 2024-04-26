@@ -56,7 +56,7 @@ onMounted(() => {
 
 <template>
   <main class="flex flex-col w-full">
-    <div class="w-full">
+    <div class="w-full mb-8">
       <Button
         @click="$router.push({ name: 'step-two' })"
         variant="outline"
@@ -65,10 +65,10 @@ onMounted(() => {
         <ChevronLeft class="w-4 h-4 mr-2" /> Go Back
       </Button>
     </div>
-    <form class="space-y-4 w-full flex flex-col items-center" @submit.prevent>
+    <form class="space-y-4 w-full flex flex-col items-center md:items-start" @submit.prevent>
       <h1 class="text-[60px] text-cyan-800">Step 3</h1>
       <h4>What's your billing address?</h4>
-      <div class="w-1/2">
+      <div class="w-full md:w-1/2">
         <FormInput
           :default-value="values.address"
           name="address"

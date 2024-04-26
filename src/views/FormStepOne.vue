@@ -84,10 +84,10 @@ onMounted(() => {
 <template>
   <main class="flex flex-col w-full items-center">
     <div class="h-[40px]"></div>
-    <form class="space-y-4 w-full flex flex-col items-center" @submit.prevent>
+    <form class="space-y-4 w-full flex flex-col items-center md:items-start" @submit.prevent>
       <h1 class="text-[60px] text-cyan-800">Step 1</h1>
       <h4>Choose your trip dates and details</h4>
-      <div class="w-1/2">
+      <div class="w-full md:w-1/2">
         <FormField name="endDate">
           <FormItem class="flex flex-col w-ful">
             <DateRangePicker

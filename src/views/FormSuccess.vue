@@ -31,7 +31,7 @@ const contactInfo = computed(() => {
 
 <template>
   <main class="flex flex-col w-full">
-    <div class="w-full">
+    <div class="w-full mb-8">
       <Button
         @click="$router.push({ name: 'step-three' })"
         variant="outline"

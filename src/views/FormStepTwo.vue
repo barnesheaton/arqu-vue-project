@@ -48,15 +48,15 @@ onMounted(() => {
 
 <template>
   <main class="flex flex-col w-full">
-    <div class="w-full">
+    <div class="w-full mb-8">
       <Button @click="$router.push('/')" variant="outline" class="justify-self-start">
         <ChevronLeft class="w-4 h-4 mr-2" /> Go Back
       </Button>
     </div>
-    <form class="space-y-4 w-full flex flex-col items-center">
+    <form class="space-y-4 w-full flex flex-col items-center md:items-start">
       <h1 class="text-[60px] text-cyan-800">Step 2</h1>
       <h4>Fill out your contact details</h4>
-      <div class="w-1/2">
+      <div class="w-full md:w-1/2">
         <FormInput
           :default-value="values.name"
           name="name"
