@@ -6,6 +6,7 @@ import { useForm } from 'vee-validate'
 import { toTypedSchema } from '@vee-validate/zod'
 import * as z from 'zod'
 import moment from 'moment'
+import { CalendarDate } from '@internationalized/date'
 
 const formStore = useFormStore()
 const router = useRouter()
@@ -16,9 +17,17 @@ import { toast } from '@/components/ui/toast'
 import DateRangePicker from '@/components/ui/date-range-picker.vue'
 import OccupancyPicker from '@/components/ui/occupancy-picker.vue'
 
+/*
+   - Controls the two way binding of the date and occupancy pickers
+   - Neccesary in order to pre-pupolate these pickers!
+   - Since we can't use the formated output sent to the form's "values" with setValues()
+*/
 const formData = ref({
-  dates: null as any,
-  occupants: null as any
+  dates: {
+    start: new CalendarDate(2024, 4, 20),
+    end: new CalendarDate(2024, 4, 20).add({ days: 4 })
+  } as any,
+  occupants: { adults: [2], children: [0], rooms: [1] } as any
 })
 
 const formSchema = toTypedSchema(
@@ -33,6 +42,7 @@ const formSchema = toTypedSchema(
   })
 )
 
+// The forms initial values should match the "default" values inside these picker components
 const { handleSubmit, setValues } = useForm({
   initialValues: {
     startDate: '2024-04-20',
@@ -45,6 +55,8 @@ const { handleSubmit, setValues } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
+  // Need spread the formData ref due to a mismatch in type.
+  // TODO: figure out best practice to remove or resolve Ref type for mutatin a Pinia store
   formStore.stepOne = { dates: formData.value.dates, occupants: formData.value.occupants }
   // Get difference in days between selected check-in and check-out dates
   const start = moment(values.startDate)
@@ -60,6 +72,8 @@ const onSubmit = handleSubmit((values) => {
   router.push({ name: 'step-two' })
 })
 
+// Every time the view mounts, check if this forms data has been previously submitted
+// If so, prepopulate the date and occupancy pickers with those values
 onMounted(() => {
   if (formStore.stepOne && formStore.stepOne) {
     formData.value = formStore.stepOne
@@ -121,14 +135,11 @@ onMounted(() => {
                 }
               "
             />
-
-            <FormDescription> </FormDescription>
-
             <FormMessage />
           </FormItem>
         </FormField>
       </div>
-      <Button @click="() => onSubmit()">Next</Button>
+      <Button @click="onSubmit">Next</Button>
     </form>
   </main>
 </template>

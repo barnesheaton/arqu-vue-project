@@ -29,7 +29,6 @@ const { handleSubmit, setValues, values } = useForm({
 })
 
 const onSubmit = handleSubmit((values) => {
-  console.log('Form submitted!', values)
   formStore.stepTwo = {
     ...values
   }
@@ -79,20 +78,24 @@ onMounted(() => {
           label="Phone Number"
           placeholder="(123)-456-7890"
         />
-        <FormInput name="requests" label="Additional Info">
-          <Textarea
-            :default-value="values.requests"
-            placeholder="Any special accomodations we need to be made aware of?"
-            class="resize-none"
-            @update:model-value="
-              (v) => {
-                setValues({ requests: v })
-              }
-            "
-          />
-        </FormInput>
+        <FormField name="requests">
+          <FormItem>
+            <FormLabel>Additional Info</FormLabel>
+            <Textarea
+              :default-value="values.requests"
+              placeholder="Any special accomodations we need to be made aware of?"
+              class="resize-none"
+              @update:model-value="
+                (v) => {
+                  setValues({ requests: v })
+                }
+              "
+            />
+            <FormMessage />
+          </FormItem>
+        </FormField>
       </div>
-      <Button @click="onSubmit" type="submit"> Next Step</Button>
+      <Button @click="onSubmit" type="submit">Next Step</Button>
     </form>
   </main>
 </template>

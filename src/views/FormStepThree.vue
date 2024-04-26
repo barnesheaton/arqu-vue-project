@@ -58,7 +58,7 @@ onMounted(() => {
   <main class="flex flex-col w-full">
     <div class="w-full">
       <Button
-        @click="$router.push({ name: 'step-three' })"
+        @click="$router.push({ name: 'step-two' })"
         variant="outline"
         class="justify-self-start"
       >
@@ -105,8 +105,8 @@ onMounted(() => {
             <SelectContent>
               <SelectGroup>
                 <SelectItem :key="state" v-for="state in states" :value="state">
-                  {{ state }}</SelectItem
-                >
+                  {{ state }}
+                </SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

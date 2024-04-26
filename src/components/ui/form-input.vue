@@ -14,7 +14,6 @@ defineProps({
   placeholder: String,
   label: String,
   description: String
-  //   defaultValue: String
 })
 </script>
 
