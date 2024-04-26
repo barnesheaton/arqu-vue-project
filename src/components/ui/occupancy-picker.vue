@@ -15,6 +15,13 @@ const value = ref({
 const props = defineProps(['modelValue'])
 const emit = defineEmits(['update:modelValue'])
 
+/* 
+ - The watchers below allow for a two way v-model binding with this component
+ - At the same time each Slider inside this template binds with the INTERNAL value ref()
+ - This way we don't have to "bubble up" individual slider events and pass down numerous value props
+*/
+
+// Watching for changes to the value ref() WITHIN the components, emit them to parent components
 watch(
   value,
   (newValue) => {
@@ -25,6 +32,7 @@ watch(
   { deep: true }
 )
 
+// Watching for changes to the modelValue prop OUTAIDE the component, update the value ref() inside the component
 watch(
   () => props.modelValue,
   (newValue, oldValue) => {
